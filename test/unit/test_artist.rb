@@ -5,11 +5,11 @@ class TestArtist < Test::Unit::TestCase
   def setup
     @artist = Rockstar::Artist.new('Metallica')
   end
-  
+
   test 'should require name' do
     assert_raises(ArgumentError) { Rockstar::Artist.new('') }
   end
-  
+
   test "should know it's name" do
     assert_equal('Metallica', @artist.name)
   end
@@ -53,7 +53,7 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/126/598154.jpg', first.images['large'])
     assert_equal('yes', first.streamable)
   end
-  
+
   test 'should be able to find top fans' do
     assert_equal(["yIIyIIyIIy", "eliteveritas", "BrandonUCD", "Mithrandir93"], @artist.top_fans.collect(&:username)[0..3])
     first = @artist.top_fans.first
@@ -66,7 +66,7 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/252/40197285.jpg', first.images['extralarge'])
     assert_equal('707560000', first.weight)
   end
-  
+
   test 'should be able to find top tracks' do
     assert_equal(['Nothing Else Matters', 'Enter Sandman', 'One', 'Master Of Puppets'], @artist.top_tracks.collect(&:name)[0..3])
     first = @artist.top_tracks.first
@@ -74,7 +74,7 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('', first.mbid)
     assert_equal('http://www.last.fm/music/Metallica/_/Nothing+Else+Matters', first.url)
   end
-  
+
   test 'should be able to find top albums' do
     assert_equal(["Master Of Puppets", "Death Magnetic", "Ride The Lightning"], @artist.top_albums.collect(&:name)[0..2])
     first = @artist.top_albums.first
@@ -83,9 +83,9 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('http://www.last.fm/music/Metallica/Master+Of+Puppets', first.url)
     assert_equal('http://userserve-ak.last.fm/serve/34s/8622967.jpg', first.image(:small))
     assert_equal('http://userserve-ak.last.fm/serve/64s/8622967.jpg', first.image(:medium))
-    assert_equal('http://userserve-ak.last.fm/serve/126/8622967.jpg', first.image(:large))    
+    assert_equal('http://userserve-ak.last.fm/serve/126/8622967.jpg', first.image(:large))
   end
-  
+
   test 'should be able to find top tags' do
     assert_equal(['thrash metal', 'metal', 'heavy metal'], @artist.top_tags.collect(&:name)[0..2])
     first = @artist.top_tags.first
@@ -119,5 +119,11 @@ class TestArtist < Test::Unit::TestCase
     assert_equal("http://www.last.fm/music/Slayer", artist.url)
     assert_equal("72de5171-38cf-4734-bc8a-6ac374dea523", artist.mbid)
     assert_match(/Slayer's musical traits involve fast tremolo picking/, artist.summary)
+  end
+
+  test 'should be able to correct artist name' do
+    artist = Rockstar::Artist.new('metalica', :include_info => true, autocorrect: true)
+    assert_equal("Metallica", artist.name)
+    assert_equal("http://www.last.fm/music/Metallica", artist.url)
   end
 end
