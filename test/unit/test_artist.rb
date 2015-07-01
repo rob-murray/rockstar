@@ -22,7 +22,7 @@ class TestArtist < Test::Unit::TestCase
   end
 
   test "should load artist info when initialized" do
-    artist = Rockstar::Artist.new("Metallica", :include_info => true)
+    artist = Rockstar::Artist.new("Metallica", include_info: true)
     assert_equal("http://www.last.fm/music/Metallica", artist.url)
     assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", artist.mbid)
     assert_match(/an American metal band formed in 1981/, artist.summary)
@@ -36,7 +36,7 @@ class TestArtist < Test::Unit::TestCase
   end
 
   test 'should load additional user images' do
-    images = @artist.user_images(:page => 2)
+    images = @artist.user_images(page: 2)
     assert_equal("http://userserve-ak.last.fm/serve/126/3679639.jpg", images[0]['large'])
     assert_equal("http://userserve-ak.last.fm/serve/252/13440.jpg", images[1]['extralarge'])
   end
@@ -103,8 +103,8 @@ class TestArtist < Test::Unit::TestCase
 
   test 'should load artist by mbid' do
     artist = Rockstar::Artist.new(nil,
-                                  :mbid => "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab",
-                                  :include_info => true)
+                                  mbid: "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab",
+                                  include_info: true)
     assert_equal("Metallica", artist.name)
     assert_equal("http://www.last.fm/music/Metallica", artist.url)
     assert_equal("http://www.last.fm/music/Metallica", artist.url)
@@ -113,7 +113,7 @@ class TestArtist < Test::Unit::TestCase
   end
 
   test 'should use last.fm artist name for returned artist name' do
-    artist = Rockstar::Artist.new('slayer', :include_info => true)
+    artist = Rockstar::Artist.new('slayer', include_info: true)
     assert_equal("Slayer", artist.name)
     assert_equal("http://www.last.fm/music/Slayer", artist.url)
     assert_equal("http://www.last.fm/music/Slayer", artist.url)
@@ -122,7 +122,7 @@ class TestArtist < Test::Unit::TestCase
   end
 
   test 'should be able to correct artist name' do
-    artist = Rockstar::Artist.new('metalica', :include_info => true, autocorrect: true)
+    artist = Rockstar::Artist.new('metalica', include_info: true, autocorrect: true)
     assert_equal("Metallica", artist.name)
     assert_equal("http://www.last.fm/music/Metallica", artist.url)
   end
