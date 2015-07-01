@@ -1,6 +1,6 @@
 # Getting information about an album such as release date and the summary or description on it is very easy.
 #
-#   album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
+#   album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', include_info: true)
 #
 #   puts "Album: #{album.name}"
 #   puts "Artist: #{album.artist}"
@@ -50,13 +50,13 @@ module Rockstar
       @artist = artist
       @name   = name
 
-      options = {:include_info => false}.merge(o)
+      options = {include_info: false}.merge(o)
       load_info if options[:include_info]
     end
 
     def load_info(xml=nil)
       unless xml
-        doc = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
+        doc = self.class.fetch_and_parse("album.getInfo", {artist: @artist, album:@name})
         xml = (doc / :album).first
       end
 
