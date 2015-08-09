@@ -161,6 +161,14 @@ class TestUser < Test::Unit::TestCase
     assert_equal('1276967182', first.date_uts)
   end
 
+  test 'should have recent tracks in time range' do
+    recent_tracks = @user.recent_tracks(false, from: '1092587022', to: '1092587040')
+    assert_equal(1, recent_tracks.size)
+    first = recent_tracks.first
+    assert_equal(Time.mktime(2004, 8, 15, 16, 23, 00), first.date)
+    assert_equal('1092587022', first.date_uts)
+  end
+
   test 'should have recent loved tracks' do
     assert_equal(50, @user.recent_loved_tracks.size)
     first = @user.recent_loved_tracks.first
