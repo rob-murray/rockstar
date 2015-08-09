@@ -143,8 +143,10 @@ module Rockstar
       get_instance("user.getNeighbours", :neighbours, :user, {user: @username}, force)
     end
 
-    def recent_tracks(force=false)
-      get_instance("user.getRecentTracks", :recent_tracks, :track, {user: @username}, force)
+    def recent_tracks(force=false, options={})
+      options[:user] = @username
+
+      get_instance("user.getRecentTracks", :recent_tracks, :track, options, force)
     end
 
     def recent_loved_tracks(force=false)
