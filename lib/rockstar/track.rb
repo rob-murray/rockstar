@@ -77,6 +77,10 @@ module Rockstar
       # track (Required) : The track name
       # artist (Optional) : Narrow your search by specifying an artist.
       def search(params = {})
+        if params[:track].blank?
+          raise ArgumentError, "Missing required argument"
+        end
+
         query = {
           track: params[:track]
         }
