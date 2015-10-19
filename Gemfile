@@ -9,6 +9,7 @@ group :development do
 end
 
 group :test do
+  gem "test-unit"
   gem "hpricot", ">= 0.4.0"
   gem "activesupport", ">=1.4.2"
 end
