@@ -70,6 +70,25 @@ module Rockstar
         doc.at("lfm")["status"]
       end
 
+      # Search a song
+      #
+      # limit (Optional) : The number of results to fetch per page. Defaults to 30.
+      # page (Optional) : The page number to fetch. Defaults to first page.
+      # track (Required) : The track name
+      # artist (Optional) : Narrow your search by specifying an artist.
+      def search(params = {})
+        query = {
+          track: params[:track]
+        }
+
+        query[:limit]  = params[:limit]  if params[:limit]
+        query[:page]   = params[:page]   if params[:page]
+        query[:track]  = params[:track]  if params[:track]
+        query[:artist] = params[:artist] if params[:artist]
+
+        get_instance('track.search', :search, :track, query, false)
+      end
+
       # Scrobble a song
       #
       # Possible parameters:
