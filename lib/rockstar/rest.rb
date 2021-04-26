@@ -58,9 +58,14 @@ module Rockstar
   		end
 
   		private
-  		  def escape(str)
-  		    URI.escape(str, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-  		  end
+
+  		ESCAPE_RE = /[^a-zA-Z0-9 .~_-]/.freeze
+
+	    def escape(str)
+	      str.to_s.gsub(ESCAPE_RE) do |match|
+	        "%#{match.unpack('H2' * match.bytesize).join('%').upcase}"
+	      end.gsub(' ', '+')
+	    end
   	end
   end
 end
